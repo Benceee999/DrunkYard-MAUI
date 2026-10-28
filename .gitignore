@@ -1,0 +1,14 @@
+# Build és generált állományok
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio és felhasználói beállítások
+.vs/
+*.user
+*.userosscache
+*.suo
+
+# Adatbázisok
+*.db
+*.sqlite
+*.sqlite3

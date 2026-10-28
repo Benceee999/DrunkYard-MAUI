@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="DrunkYard.Views.GameDetailsPage"
+             x:DataType="viewmodel:GameDetailsViewModel"
+             Title="{Binding Game.Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <Label Text="{Binding Game.Title}" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <Label Text="{Binding Game.Category, StringFormat='Szint: {0}'}" FontAttributes="Italic" TextColor="Gray"/>
+                <Label Text="{Binding Game.MinPlayers, StringFormat='Játékosok: {0}+'}" FontAttributes="Italic" TextColor="Gray"/>
+            </HorizontalStackLayout>
+
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Leírás" FontSize="18" FontAttributes="Bold" TextColor="#512BD4"/>
+            <Label Text="{Binding Game.Description}" FontSize="16" />
+
+            <Label Text="Szabályok" FontSize="18" FontAttributes="Bold" TextColor="#512BD4" Margin="0,10,0,0"/>
+            <Label Text="{Binding Game.Rules}" FontSize="16" />
+
+            <VerticalStackLayout Spacing="15" Margin="0,20,0,0">
+
+                <Button Text="JÁTÉK INDÍTÁSA ▶️"
+                        Command="{Binding PlayGameCommand}"
+                        BackgroundColor="Green"
+                        TextColor="White"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="60"
+                        CornerRadius="30"
+                        IsVisible="False">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding Game.PlayableLogicId}" Value="swipe">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding Game.PlayableLogicId}" Value="kingscup">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Command="{Binding ToggleFavoriteCommand}"
+                        BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#333}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="25">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding Game.IsFavorite}" Value="True">
+                            <Setter Property="Text" Value="❤️ Kedvencekben" />
+                            <Setter Property="TextColor" Value="Red" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding Game.IsFavorite}" Value="False">
+                            <Setter Property="Text" Value="🤍 Hozzáadás a kedvencekhez" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Vissza a listához"
+                        Command="{Binding GoBackCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="Gray" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

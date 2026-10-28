@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             xmlns:model="clr-namespace:DrunkYard.DataAccess.Models;assembly=DrunkYard.DataAccess"
+             x:Class="DrunkYard.Views.VotePage"
+             x:DataType="viewmodel:VoteViewModel"
+             Title="Szavazás">
+
+    <Grid RowDefinitions="Auto, *">
+        <RefreshView Grid.Row="1" 
+                     Command="{Binding LoadCandidatesCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+
+            <CollectionView ItemsSource="{Binding Candidates}"
+                            SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <Label Text="Jelenleg nincs szavazásra váró játék."
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           TextColor="Gray"/>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:CandidateGame">
+                        <Frame Margin="10,5" Padding="15" BorderColor="LightGray" CornerRadius="10">
+                            <Grid ColumnDefinitions="*, Auto">
+
+                                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Category}" FontSize="12" TextColor="Gray"/>
+                                    <Label Text="{Binding Description}" FontSize="14" MaxLines="2" LineBreakMode="TailTruncation"/>
+
+                                    <Label Text="{Binding Votes, StringFormat='Szavazatok: {0}'}" 
+                                           TextColor="#512BD4" FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="1"
+                                        FontSize="20"
+                                        HeightRequest="50"
+                                        WidthRequest="50"
+                                        Padding="0"
+                                        CornerRadius="25"
+                                        TextColor="Black"
+                                        VerticalOptions="Center"
+                                        
+                                        Text="👍"
+                                        BackgroundColor="#E0E0E0"
+                                        IsEnabled="True"
+                                        Opacity="1">
+
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding HasVoted}" Value="True">
+                                            <Setter Property="Text" Value="✅" />
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Setter Property="BackgroundColor" Value="LightGreen" />
+                                            <Setter Property="Opacity" Value="0.8" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+
+                                    <Button.CommandParameter>
+                                        <Binding Path="."/>
+                                    </Button.CommandParameter>
+                                    <Button.Command>
+                                        <Binding Source="{RelativeSource AncestorType={x:Type viewmodel:VoteViewModel}}" Path="VoteCommand"/>
+                                    </Button.Command>
+                                </Button>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

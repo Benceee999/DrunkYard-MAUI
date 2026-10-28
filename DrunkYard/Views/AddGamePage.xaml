@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             x:Class="DrunkYard.Views.AddGamePage"
+             x:DataType="viewmodel:AddGameViewModel"
+             Title="Új Játék Beküldése">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <Label Text="Oszd meg a kedvenc játékodat!" 
+                   FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Játék neve" 
+                   Text="{Binding Title}"
+                   FontSize="16" />
+
+            <Label Text="Nehézségi szint:" TextColor="Gray" FontSize="14"/>
+            <Picker SelectedIndex="{Binding SelectedCategoryIndex}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Easy (Könnyű)</x:String>
+                        <x:String>Medium (Közepes)</x:String>
+                        <x:String>Hard (Kemény)</x:String>
+                        <x:String>Extreme (Veszélyes)</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Label Text="Minimum játékosok száma:" TextColor="Gray" FontSize="14"/>
+            <Entry Text="{Binding MinPlayers}" 
+                   Keyboard="Numeric" 
+                   Placeholder="Pl. 2"/>
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Label Text="Szükséges hozzá kellék?" VerticalOptions="Center" FontSize="16"/>
+                <Switch IsToggled="{Binding IsEquipmentNeeded}" OnColor="#512BD4"/>
+            </HorizontalStackLayout>
+
+            <Button Text="📷 Kép készítése / Tallózás"
+                    Command="{Binding TakePhotoCommand}"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Image Source="{Binding SelectedImagePath}"
+                   HeightRequest="150"
+                   Aspect="AspectFit"
+                   IsVisible="True">
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image" Binding="{Binding SelectedImagePath}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
+
+            <Editor Placeholder="Rövid leírás (Miről szól?)" 
+                    Text="{Binding Description}"
+                    HeightRequest="100" />
+
+            <Editor Placeholder="Részletes szabályok..." 
+                    Text="{Binding Rules}"
+                    HeightRequest="150" />
+
+            <Button Text="Beküldés" 
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="#512BD4"
+                    Margin="0,20,0,50"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

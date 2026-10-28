@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrunkYard", "DrunkYard\DrunkYard.csproj", "{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrunkYard.DataAccess", "DrunkYard.DataAccess\DrunkYard.DataAccess.csproj", "{24FD483D-AD75-49F5-BF81-7D07CDF70451}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A77EBE6D-267A-4E91-9EE4-DFDDD4F74300}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{24FD483D-AD75-49F5-BF81-7D07CDF70451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FD483D-AD75-49F5-BF81-7D07CDF70451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FD483D-AD75-49F5-BF81-7D07CDF70451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FD483D-AD75-49F5-BF81-7D07CDF70451}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FF4CCDC-E8AD-4C7C-8A91-EA9A148B9171}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             x:Class="DrunkYard.Views.KingsCupPage"
+             x:DataType="viewmodel:KingsCupViewModel"
+             Title="King's Cup"
+             BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#121212}">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center" Spacing="20">
+            <Label Text="{Binding CardsRemaining, StringFormat='Pakli: {0}'}" FontSize="16" TextColor="Gray"/>
+            <Label Text="{Binding KingsCountText}" FontSize="16" TextColor="Orange" FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="30">
+
+            <Frame HeightRequest="350" 
+                   WidthRequest="240"
+                   CornerRadius="20"
+                   BackgroundColor="White"
+                   BorderColor="Gray"
+                   HasShadow="True"
+                   Padding="15"
+                   HorizontalOptions="Center">
+
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DrawCardCommand}" />
+                </Frame.GestureRecognizers>
+
+                <Grid>
+                    <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Start">
+                        <Label Text="{Binding CurrentCard.Rank}" TextColor="{Binding CurrentCard.Color}" FontSize="30" FontAttributes="Bold"/>
+                        <Label Text="{Binding CurrentCard.Suit}" TextColor="{Binding CurrentCard.Color}" FontSize="24"/>
+                    </VerticalStackLayout>
+
+                    <Label Text="{Binding CurrentCard.Suit}" 
+                           TextColor="{Binding CurrentCard.Color}" 
+                           FontSize="100"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+                    <VerticalStackLayout HorizontalOptions="End" VerticalOptions="End" Rotation="180">
+                        <Label Text="{Binding CurrentCard.Rank}" TextColor="{Binding CurrentCard.Color}" FontSize="30" FontAttributes="Bold"/>
+                        <Label Text="{Binding CurrentCard.Suit}" TextColor="{Binding CurrentCard.Color}" FontSize="24"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="{Binding CurrentCard.RuleTitle}" 
+                       FontSize="26" 
+                       FontAttributes="Bold" 
+                       TextColor="#512BD4"
+                       HorizontalTextAlignment="Center"/>
+
+                <Label Text="{Binding CurrentCard.RuleDescription}" 
+                       FontSize="18" 
+                       HorizontalTextAlignment="Center"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+        <Button Grid.Row="2"
+                Text="KÖVETKEZŐ KÁRTYA"
+                Command="{Binding DrawCardCommand}"
+                BackgroundColor="#512BD4"
+                TextColor="White"
+                FontSize="18"
+                CornerRadius="25"
+                HeightRequest="60"
+                Margin="0,0,0,20"/>
+
+    </Grid>
+</ContentPage>

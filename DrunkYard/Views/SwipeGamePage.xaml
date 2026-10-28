@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             x:Class="DrunkYard.Views.SwipeGamePage"
+             x:DataType="viewmodel:SwipeGameViewModel"
+             Title="Én még sosem...">
+
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center"
+                             IsVisible="{Binding IsGameOver}">
+            <Label Text="Elfogyott a pakli!" FontSize="24" HorizontalOptions="Center"/>
+            <Button Text="Újra" Command="{Binding LoadQuestionsCommand}" Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+
+        <Grid x:Name="CardContainer" Padding="20" IsVisible="True">
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding IsGameOver}" Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </Grid.Triggers>
+
+            <Frame x:Name="SwipeCard"
+                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1c1c1e}"
+                   BorderColor="Gray"
+                   CornerRadius="20"
+                   HasShadow="True"
+                   HeightRequest="400"
+                   WidthRequest="300"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+
+                <Frame.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="OnPanUpdated" />
+                </Frame.GestureRecognizers>
+
+                <VerticalStackLayout VerticalOptions="Center" Spacing="20">
+                    <Label Text="Én még sosem..." 
+                           TextColor="#512BD4"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="{Binding CurrentQuestion.Text}"
+                           FontSize="26"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </Grid>
+    </Grid>
+</ContentPage>

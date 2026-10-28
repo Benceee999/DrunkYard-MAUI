@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:DrunkYard.ViewModels"
+             xmlns:model="clr-namespace:DrunkYard.DataAccess.Models;assembly=DrunkYard.DataAccess"
+             x:Class="DrunkYard.Views.GamesPage"
+             x:DataType="viewmodel:GamesViewModel"
+             Title="DrunkYard Játékok">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Frame Grid.Row="0" Margin="10" Padding="10" BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#1c1c1e}" BorderColor="Gray">
+            <VerticalStackLayout Spacing="10">
+
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="❤️ Csak a kedvencek" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Switch IsToggled="{Binding IsFavoritesOnly}" OnColor="Red" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="Rendezés:" VerticalOptions="Center"/>
+                    <Picker SelectedIndex="{Binding SortOptionIndex}" WidthRequest="200">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Név szerint (A-Z)</x:String>
+                                <x:String>Nehézség (Könnyűtől)</x:String>
+                                <x:String>Nehézség (Nehéztől)</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Frame>
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}" 
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="#512BD4"
+                           HeightRequest="50"
+                           WidthRequest="50"
+                           ZIndex="99"/>
+
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Games}"
+                        SelectionMode="None">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Nincs találat a szűrő alapján." TextColor="Gray"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:DrinkGame">
+                    <Frame Margin="10,5" Padding="10" BorderColor="Gray" CornerRadius="10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:GamesViewModel}}, Path=TapCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="5">
+
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                <Label Text="🎮 JÁTSZHATÓ" FontSize="10" FontAttributes="Bold" TextColor="White" BackgroundColor="Green" Padding="6,2" VerticalOptions="Center" IsVisible="False">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding PlayableLogicId}" Value="swipe">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding PlayableLogicId}" Value="kingscup">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <Label Text="❤️" IsVisible="{Binding IsFavorite}" VerticalOptions="Center" TextColor="Red"/>
+                            </HorizontalStackLayout>
+
+                            <Label Text="{Binding Category}" FontSize="14" TextColor="Gray"/>
+                            <Label Text="{Binding Description}" FontSize="12" LineBreakMode="TailTruncation"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
